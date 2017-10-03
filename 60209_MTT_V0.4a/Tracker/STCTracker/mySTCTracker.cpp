@@ -1,0 +1,287 @@
+/*****************************************************************/
+/****mySTCTracker**********************************************/
+/****增加mySTCTracker类,继承STCTracker***********************/
+/****解决边框问题************************************************/
+/*****************************************************************/
+/******************************************by Lionel**************/
+/*****************************************************************/
+/*****************************************************************/
+/*****************************************************************/
+/*****************************************************************/
+/*****************************************************************/
+// Fast object tracking algorithm  
+// Author : zouxy  
+// Date   : 2013-11-21  
+// HomePage : http://blog.csdn.net/zouxy09  
+// Email  : zouxy09@qq.com  
+// Reference: Kaihua Zhang, et al. Fast Tracking via Spatio-Temporal Context Learning  
+// HomePage : http://www4.comp.polyu.edu.hk/~cskhzhang/  
+// Email: zhkhua@gmail.com   
+//边界错误：
+//尽管在应用中极少出现如下情况：
+//增加copyMakeBorder后可以应对绝大多数的边界问题
+//但发现有极小概率会在左边界和上边界运行出错。测试视频8
+//分析原因是borderImage填充颜色为黑色
+//当目标框选图像亮度较低时会向边界之外运动，令输出值超出范围
+//此时将重新调用init函数将目标框初始到左上角，by L.1618
+#include "mySTCTracker.h"  
+using cv::Rect;
+using cv::Mat;
+using namespace cv;
+void mySTCTracker::_init(const cv::Mat &_frame, const cv::Rect &_box)
+{
+	int border=2*MAX(_box.width,_box.height);//利用跟踪窗的最大边长创建边框
+	cv::Mat borderImage;
+	cv::copyMakeBorder(_frame,borderImage,border,border,border,border,BORDER_CONSTANT,cv::Scalar(255,255,255));
+	m_trackingBox.x=_box.x+border;
+	m_trackingBox.y=_box.y+border;
+	m_trackingBox.width=_box.width;
+	m_trackingBox.height=_box.height;
+	init(borderImage,m_trackingBox);
+}
+void mySTCTracker::_tracking(const cv::Mat &_frame,cv::Rect &_box)
+{
+	int border=2*MAX(_box.width,_box.height);//利用跟踪窗的最大边长创建边框
+	cv::Mat borderImage;
+	cv::copyMakeBorder(_frame,borderImage,border,border,border,border,BORDER_CONSTANT,cv::Scalar(255,255,255));
+	tracking(borderImage,m_trackingBox);
+	if(m_trackingBox.x<border||m_trackingBox.y<border)
+		init(borderImage,cv::Rect(border+10,border+10,m_trackingBox.width,m_trackingBox.height));
+	m_trackingBox.x=MAX(border+10,//跟踪窗的安全检测
+		MIN(m_trackingBox.x,_frame.cols+border-m_trackingBox.width/2-1));
+	m_trackingBox.y=MAX(border+10,
+		MIN(m_trackingBox.y,_frame.rows+border-m_trackingBox.height/2-1));
+	_box.x=m_trackingBox.x-border;
+	_box.y=m_trackingBox.y-border;
+	_box.width=m_trackingBox.width;
+	_box.height=m_trackingBox.height;
+}
+STCTracker::STCTracker()  
+{  
+}  
+STCTracker::~STCTracker()  
+{  
+}  
+/************ Create a Hamming window ********************/  
+void STCTracker::createHammingWin()  
+{  
+	for (int i = 0; i < hammingWin.rows; i++)  
+	{  
+		for (int j = 0; j < hammingWin.cols; j++)  
+		{  
+			hammingWin.at<double>(i, j) = (0.54 - 0.46 * cos( 2 * CV_PI * i / hammingWin.rows ))   
+				* (0.54 - 0.46 * cos( 2 * CV_PI * j / hammingWin.cols ));  
+		}  
+	}  
+}  
+/************ Define two complex-value operation *****************/  
+void STCTracker::complexOperation(const Mat src1, const Mat src2, Mat &dst, int flag)  
+{  
+	CV_Assert(src1.size == src2.size);  
+	CV_Assert(src1.channels() == 2);  
+
+	Mat A_Real, A_Imag, B_Real, B_Imag, R_Real, R_Imag;  
+	vector<Mat> planes;  
+	split(src1, planes);  
+	planes[0].copyTo(A_Real);  
+	planes[1].copyTo(A_Imag);  
+
+	split(src2, planes);  
+	planes[0].copyTo(B_Real);  
+	planes[1].copyTo(B_Imag);  
+
+	dst.create(src1.rows, src1.cols, CV_64FC2);  
+	split(dst, planes);  
+	R_Real = planes[0];  
+	R_Imag = planes[1];  
+
+	for (int i = 0; i < A_Real.rows; i++)  
+	{  
+		for (int j = 0; j < A_Real.cols; j++)  
+		{  
+			double a = A_Real.at<double>(i, j);  
+			double b = A_Imag.at<double>(i, j);  
+			double c = B_Real.at<double>(i, j);  
+			double d = B_Imag.at<double>(i, j);  
+
+			if (flag) 
+			{  
+				// division: (a+bj) / (c+dj)  
+				R_Real.at<double>(i, j) = (a * c + b * d) / (c * c + d * d + 0.000001);  
+				R_Imag.at<double>(i, j) = (b * c - a * d) / (c * c + d * d + 0.000001);  
+			}  
+			else  
+			{  
+				// multiplication: (a+bj) * (c+dj)  
+				R_Real.at<double>(i, j) = a * c - b * d;  
+				R_Imag.at<double>(i, j) = b * c + a * d;  
+			}  
+		}  
+	}  
+	merge(planes, dst);  
+}  
+
+/************ Get context prior and posterior probability ***********/  
+void STCTracker::getCxtPriorPosteriorModel(const Mat image)  
+{  
+	CV_Assert(image.size == cxtPriorPro.size);  
+
+	double sum_prior(0), sum_post(0);  
+	for (int i = 0; i < cxtRegion.height; i++)  
+	{  
+		for (int j = 0; j < cxtRegion.width; j++)  
+		{  
+			double x = j + cxtRegion.x;  
+			double y = i + cxtRegion.y;  
+			double dist = sqrt((center.x - x) * (center.x - x) + (center.y - y) * (center.y - y));  
+
+			// equation (5) in the paper  
+			cxtPriorPro.at<double>(i, j) = exp(- dist * dist / (2 * sigma * sigma));  
+			sum_prior += cxtPriorPro.at<double>(i, j);  
+
+			// equation (6) in the paper  
+			cxtPosteriorPro.at<double>(i, j) = exp(- pow(dist / sqrt(alpha), beta));  
+			sum_post += cxtPosteriorPro.at<double>(i, j);  
+		}  
+	}  
+	cxtPriorPro.convertTo(cxtPriorPro, -1, 1.0/sum_prior);  
+	cxtPriorPro = cxtPriorPro.mul(image);  
+	cxtPosteriorPro.convertTo(cxtPosteriorPro, -1, 1.0/sum_post);  
+}  
+
+/************ Learn Spatio-Temporal Context Model ***********/  
+void STCTracker::learnSTCModel(const Mat image) //由cxtRegion灰度图学习模型 
+{  
+	// step 1: Get context prior and posterior probability  
+	getCxtPriorPosteriorModel(image); //获取先验和后验概率 
+
+	// step 2-1: Execute 2D DFT for prior probability  //2D-DFT 先验概率
+	Mat priorFourier;  
+	Mat planes1[] = {cxtPriorPro, Mat::zeros(cxtPriorPro.size(), CV_64F)};  
+	merge(planes1, 2, priorFourier);  
+	dft(priorFourier, priorFourier);  
+
+	// step 2-2: Execute 2D DFT for posterior probability//2D-DFT 后验概率  
+	Mat postFourier;  
+	Mat planes2[] = {cxtPosteriorPro, Mat::zeros(cxtPosteriorPro.size(), CV_64F)};  
+	merge(planes2, 2, postFourier);  
+	dft(postFourier, postFourier);  
+
+	// step 3: Calculate the division  
+	Mat conditionalFourier;  //计算除法，结果到条件概率
+	complexOperation(postFourier, priorFourier, conditionalFourier, 1);  
+
+	// step 4: Execute 2D inverse DFT for conditional probability and we obtain STModel  
+	dft(conditionalFourier, STModel, DFT_INVERSE | DFT_REAL_OUTPUT | DFT_SCALE);  
+
+	// step 5: Use the learned spatial context model to update spatio-temporal context model  
+	addWeighted(STCModel, 1.0 - rho, STModel, rho, 0.0, STCModel);//加权  
+}  
+
+/************ Initialize the hyper parameters and models ***********/  
+void STCTracker::init(const Mat &frame, const Rect box)  
+{  
+	// initial some parameters//TAG1 初始化参数  
+	alpha = 2.25;  
+	beta = 1;  
+	rho = 0.075;  
+	sigma = 0.5 * (box.width + box.height);  
+
+	// the object position  
+	center.x = box.x + 0.5 * box.width;  
+	center.y = box.y + 0.5 * box.height;  
+
+	// the context region  
+	cxtRegion.width = 2 * box.width;  
+	cxtRegion.height = 2 * box.height;  
+	cxtRegion.x = center.x - cxtRegion.width * 0.5;  
+	cxtRegion.y = center.y - cxtRegion.height * 0.5;  
+	cxtRegion &= Rect(0, 0, frame.cols, frame.rows);  
+
+	// the prior, posterior and conditional probability and spatio-temporal context model  
+	cxtPriorPro = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+	cxtPosteriorPro = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+	STModel = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+	STCModel = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+
+	// create a Hamming window  
+	hammingWin = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+	createHammingWin();  
+
+	Mat gray;  
+	cvtColor(frame, gray, CV_RGB2GRAY);  
+
+	// normalized by subtracting the average intensity of that region  
+	Scalar average = mean(gray(cxtRegion));  
+	Mat context;  
+	gray(cxtRegion).convertTo(context, CV_64FC1, 1.0, - average[0]);  
+
+	// multiplies a Hamming window to reduce the frequency effect of image boundary  
+	context = context.mul(hammingWin);  
+
+	// learn Spatio-Temporal context model from first frame  
+	learnSTCModel(context);//TAG 学习时空模型  
+}  
+
+/******** STCTracker: calculate the confidence map and find the max position *******/  
+void STCTracker::tracking(const Mat &frame, Rect &trackBox)  
+{  
+	Mat gray;  
+	cvtColor(frame, gray, CV_RGB2GRAY);  
+
+	// normalized by subtracting the average intensity of that region  
+	Scalar average = mean(gray(cxtRegion));  
+	Mat context;  //新frame上Prior cxtRegion的context
+	gray(cxtRegion).convertTo(context, CV_64FC1, 1.0, - average[0]);  
+
+	// multiplies a Hamming window to reduce the frequency effect of image boundary  
+	context = context.mul(hammingWin);  //context乘以汉宁窗
+
+	// step 1: Get context prior probability  
+	getCxtPriorPosteriorModel(context); //TAG 获取先验后验模型 
+
+	// step 2-1: Execute 2D DFT for prior probability  
+	Mat priorFourier;  
+	Mat planes1[] = {cxtPriorPro, Mat::zeros(cxtPriorPro.size(), CV_64F)};  
+	merge(planes1, 2, priorFourier);  
+	dft(priorFourier, priorFourier);  
+
+	// step 2-2: Execute 2D DFT for conditional probability  
+	Mat STCModelFourier;  
+	Mat planes2[] = {STCModel, Mat::zeros(STCModel.size(), CV_64F)};  
+	merge(planes2, 2, STCModelFourier);  
+	dft(STCModelFourier, STCModelFourier);  
+
+	// step 3: Calculate the multiplication  
+	Mat postFourier;  
+	complexOperation(STCModelFourier, priorFourier, postFourier, 0);  
+
+	// step 4: Execute 2D inverse DFT for posterior probability namely confidence map  
+	Mat confidenceMap;  
+	dft(postFourier, confidenceMap, DFT_INVERSE | DFT_REAL_OUTPUT| DFT_SCALE);  
+
+	// step 5: Find the max position  //置信图最大值
+	Point point;  
+	minMaxLoc(confidenceMap, 0, 0, 0, &point);  
+
+	// step 6-1: update center, trackBox and context region  
+	center.x = cxtRegion.x + point.x;  
+	center.y = cxtRegion.y + point.y;  
+	trackBox.x = center.x - 0.5 * trackBox.width;  
+	trackBox.y = center.y - 0.5 * trackBox.height;  
+	trackBox &= Rect(0, 0, frame.cols, frame.rows);  
+
+	cxtRegion.x = center.x - cxtRegion.width * 0.5;  
+	cxtRegion.y = center.y - cxtRegion.height * 0.5;  
+	cxtRegion &= Rect(0, 0, frame.cols, frame.rows);  
+
+	// step 7: learn Spatio-Temporal context model from this frame for tracking next frame  
+	average = mean(gray(cxtRegion));  
+	gray(cxtRegion).convertTo(context, CV_64FC1, 1.0, - average[0]);  
+	////TAG modify
+	//hammingWin = Mat::zeros(cxtRegion.height, cxtRegion.width, CV_64FC1);  
+	//createHammingWin();  
+	//context = context.mul(hammingWin);  
+	////TAG
+	learnSTCModel(context);  
+}  

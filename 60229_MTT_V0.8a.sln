@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "60209_MTT_V0", "60209_MTT_V0.4a\60209_MTT_V0.vcxproj", "{94CFF055-5A8F-4064-BAE2-EF9D2D326617}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94CFF055-5A8F-4064-BAE2-EF9D2D326617}.Debug|Win32.ActiveCfg = Debug|Win32
+		{94CFF055-5A8F-4064-BAE2-EF9D2D326617}.Debug|Win32.Build.0 = Debug|Win32
+		{94CFF055-5A8F-4064-BAE2-EF9D2D326617}.Release|Win32.ActiveCfg = Release|Win32
+		{94CFF055-5A8F-4064-BAE2-EF9D2D326617}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = msvc2010
+	EndGlobalSection
+EndGlobal

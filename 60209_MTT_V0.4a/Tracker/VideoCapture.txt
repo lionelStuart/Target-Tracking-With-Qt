@@ -1,0 +1,51 @@
+#include<opencv2/opencv.hpp>
+#include<iostream>
+
+//using namespace std;
+
+using std::cout;
+using std::endl;
+using std::cerr;
+int main(int argc,char** argv)
+{
+	cout<<"Start"<<endl;
+	cv::VideoCapture capture;
+	const std::string src="E:\\src\\video\\DessertWithFog\\DessertWithFog.avi";
+	capture.open(src);
+	cv::Mat frame;
+	if(!capture.isOpened()){cerr<<"VideoCapture Input Failure"<<endl;return -1;}
+	int frameID=0;
+	CvSize frameSize;
+	int width,height;
+	const std::string WindowName="Input";
+	cv::namedWindow(WindowName);
+	//TODO Define 
+
+	//END
+	while(capture.read(frame))
+	{
+		if(0==frameID)
+		{
+			frameSize=frame.size();
+			width=frameSize.width;
+			height=frameSize.height;
+			//TODO inital
+
+			//END
+		}
+		//TODO onRun
+
+		//END
+		frameID++;
+		cv::imshow(WindowName,frame);
+				char key;
+		key=cv::waitKey(10);
+		while('p'==key)
+		{
+			key=cv::waitKey(0);
+		}
+	}
+	cout<<"Ends"<<endl;
+	getchar();
+	return 0;
+}

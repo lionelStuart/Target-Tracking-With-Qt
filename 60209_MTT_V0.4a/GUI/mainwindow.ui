@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowClass</class>
+ <widget class="QMainWindow" name="MainWindowClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1052</width>
+    <height>713</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>无人机目标跟踪多任务实验演示平台</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="mainwindow.qrc">
+    <normaloff>:/icon/Resource/icon.png</normaloff>:/icon/Resource/icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QGroupBox" name="frontBox">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1051</width>
+      <height>691</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/MainWindow/Resource/front.png);</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>130</y>
+       <width>631</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="0">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 26pt &quot;方正姚体&quot; ;
+background: transparent;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>-1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>-1</number>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; color:#c7c7c7;&quot;&gt;无人机目标跟踪多任务实验演示平台&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>530</y>
+       <width>241</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: transparent;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; font-style:italic; color:#c31a72;&quot;&gt;西安电子科技大学&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1052</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_F">
+    <property name="title">
+     <string>文件(&amp;F)</string>
+    </property>
+    <addaction name="actionOpenVideo"/>
+    <addaction name="separator"/>
+    <addaction name="actionReturn"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menu_T">
+    <property name="title">
+     <string>单目标跟踪(&amp;T)</string>
+    </property>
+    <addaction name="actionCT"/>
+    <addaction name="actionKCF"/>
+    <addaction name="actionSTC"/>
+    <addaction name="actionHash"/>
+    <addaction name="actionSTRUCK"/>
+    <addaction name="actionPF"/>
+   </widget>
+   <widget class="QMenu" name="menu_L">
+    <property name="title">
+     <string>目标定位(&amp;L)</string>
+    </property>
+    <addaction name="actionCTL"/>
+    <addaction name="actionKCFL"/>
+    <addaction name="actionSTCL"/>
+    <addaction name="actionHashL"/>
+    <addaction name="actionSTRUCKL"/>
+    <addaction name="actionPFL"/>
+   </widget>
+   <widget class="QMenu" name="menu_D">
+    <property name="title">
+     <string>目标检测(&amp;D)</string>
+    </property>
+    <addaction name="actionMD"/>
+    <addaction name="actionTR"/>
+   </widget>
+   <widget class="QMenu" name="menu_M">
+    <property name="title">
+     <string>多目标跟踪(&amp;M)</string>
+    </property>
+    <addaction name="actionMTT"/>
+    <addaction name="actionMTL"/>
+    <addaction name="separator"/>
+    <addaction name="actionMTCL"/>
+   </widget>
+   <widget class="QMenu" name="menu_H">
+    <property name="title">
+     <string>帮助(&amp;H)</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menu_F"/>
+   <addaction name="menu_T"/>
+   <addaction name="menu_L"/>
+   <addaction name="menu_D"/>
+   <addaction name="menu_M"/>
+   <addaction name="menu_H"/>
+  </widget>
+  <action name="actionMTT">
+   <property name="text">
+    <string>单无人机跟踪</string>
+   </property>
+  </action>
+  <action name="actionPF">
+   <property name="text">
+    <string>粒子滤波</string>
+   </property>
+  </action>
+  <action name="actionOpenVideo">
+   <property name="text">
+    <string>读取视频</string>
+   </property>
+  </action>
+  <action name="actionCT">
+   <property name="text">
+    <string>CT</string>
+   </property>
+  </action>
+  <action name="actionHash">
+   <property name="text">
+    <string>Hash</string>
+   </property>
+  </action>
+  <action name="actionKCF">
+   <property name="text">
+    <string>KCF</string>
+   </property>
+  </action>
+  <action name="actionSTC">
+   <property name="text">
+    <string>STC</string>
+   </property>
+  </action>
+  <action name="actionSTRUCK">
+   <property name="text">
+    <string>STRUCK</string>
+   </property>
+  </action>
+  <action name="actionCTL">
+   <property name="text">
+    <string>CT</string>
+   </property>
+  </action>
+  <action name="actionKCFL">
+   <property name="text">
+    <string>KCF</string>
+   </property>
+  </action>
+  <action name="actionHashL">
+   <property name="text">
+    <string>Hash</string>
+   </property>
+  </action>
+  <action name="actionSTCL">
+   <property name="text">
+    <string>STC</string>
+   </property>
+  </action>
+  <action name="actionSTRUCKL">
+   <property name="text">
+    <string>STRUCK</string>
+   </property>
+  </action>
+  <action name="actionPFL">
+   <property name="text">
+    <string>粒子滤波</string>
+   </property>
+  </action>
+  <action name="actionMD">
+   <property name="text">
+    <string>运动检测</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Motion Detect&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionTR">
+   <property name="text">
+    <string>分类器检测</string>
+   </property>
+  </action>
+  <action name="actionMTCL">
+   <property name="text">
+    <string>协同跟踪</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>关于本软件</string>
+   </property>
+  </action>
+  <action name="actionReturn">
+   <property name="text">
+    <string>返回</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+   <property name="toolTip">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="actionMTL">
+   <property name="text">
+    <string>单无人机定位</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
+ <connections/>
+</ui>

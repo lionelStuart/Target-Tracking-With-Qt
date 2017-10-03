@@ -1,0 +1,12 @@
+MainWindow 1052X713
+
+centralWidget 1052X692   resizeto  1045X693
+
+background_image:
+mainwindow 1051*691 A
+targetTracking 1031*131 B
+targetlocation 601*201 C
+motion_detection 1031*141 B+
+target_regection 1031*141 B+
+multi_tracking 1031*141 B+
+

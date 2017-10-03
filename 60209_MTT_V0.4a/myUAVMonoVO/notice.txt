@@ -1,0 +1,9 @@
+接口
+myUavVO
+
+use namespace myUAV
+
+测量类CMyUavVO
+
+写文档
+writePositionFile

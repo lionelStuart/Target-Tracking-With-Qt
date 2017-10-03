@@ -1,0 +1,109 @@
+﻿生成启动时间为 2016/8/4 11:13:18。
+     1>项目“E:\code\VS2010\60229_MTT_V0.8a\60209_MTT_V0.4a\60209_MTT_V0.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\MTT_V0.8a.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       CustomBuild:
+         所有输出均为最新。
+       ClCompile:
+         D:\Program Files (x86)\VS2010\VC\bin\CL.exe /c /I.\MapView /I.\ShowLabel /I.\GeneratedFiles /I. /ID:\WORK\Qt5.20\5.2.0\msvc2010\include /I.\GeneratedFiles\Debug /ID:\WORK\Qt5.20\5.2.0\msvc2010\include\QtCore /ID:\WORK\Qt5.20\5.2.0\msvc2010\include\QtGui /ID:\WORK\Qt5.20\5.2.0\msvc2010\include\QtWidgets /I.\Tracker\KCF /I.\GUI /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GUI\multitrackingwidget.cpp process\MultiTrackingProcessor.cpp
+         multitrackingwidget.cpp
+         MultiTrackingProcessor.cpp
+     1>e:\code\vs2010\60229_mtt_v0.8a\60209_mtt_v0.4a\multitargettracker\../myUAVMonoVO/MyUavVO.h(41): warning C4355: “this”: 用于基成员初始值设定项列表
+         正在生成代码...
+         所有输出均为最新。
+       Link:
+         D:\Program Files (x86)\VS2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\code\VS2010\60229_MTT_V0.8a\Win32\Debug\\MTT_V0.8a.exe" /NOLOGO /LIBPATH:D:\WORK\Qt5.20\5.2.0\msvc2010\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib getopt.lib opencv_calib3d248d.lib opencv_contrib248d.lib opencv_core248d.lib opencv_features2d248d.lib opencv_flann248d.lib opencv_gpu248d.lib opencv_highgui248d.lib opencv_imgproc248d.lib opencv_legacy248d.lib opencv_ml248d.lib opencv_nonfree248d.lib opencv_objdetect248d.lib opencv_photo248d.lib opencv_stitching248d.lib opencv_ts248d.lib opencv_video248d.lib opencv_videostab248d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\MTT_V0.8a.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\code\VS2010\60229_MTT_V0.8a\Win32\Debug\MTT_V0.8a.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\code\VS2010\60229_MTT_V0.8a\Win32\Debug\MTT_V0.8a.lib" /MACHINE:X86 Debug\CooperativeLocalization.obj
+         Debug\moc_CDrawRectWnd.obj
+         Debug\moc_CoopLocatoinProcessor.obj
+         Debug\moc_CParamWidget.obj
+         Debug\moc_multilocationwidget.obj
+         Debug\multilocationwidget.obj
+         Debug\CoopLocatoinProcessor.obj
+         Debug\cooplocationwidget.obj
+         Debug\DataAssociation.obj
+         Debug\HungarianAlg.obj
+         Debug\Kalman.obj
+         Debug\CMyDetector.obj
+         Debug\moc_cooplocationwidget.obj
+         Debug\moc_mainwindow.obj
+         Debug\moc_motiondetectionwidget.obj
+         Debug\moc_multitrackingwidget.obj
+         Debug\moc_QMapView.obj
+         Debug\moc_qshowlabel.obj
+         Debug\moc_qvideoprocessor.obj
+         Debug\moc_targetlocationwidget.obj
+         Debug\moc_targetrecognitionwidget.obj
+         Debug\moc_targettrackingwidget.obj
+         Debug\qrc_mainwindow.obj
+         Debug\CDrawRectWnd.obj
+         Debug\mainwindow.obj
+         Debug\motiondetectionwidget.obj
+         Debug\CParamWidget.obj
+         Debug\targetlocationwidget.obj
+         Debug\targetrecognitionwidget.obj
+         Debug\targettrackingwidget.obj
+         Debug\main.obj
+         Debug\QMapView.obj
+         Debug\Mat2QImage.obj
+         Debug\FrameCalibration.obj
+         Debug\FramePreprocess.obj
+         Debug\MotionDetect.obj
+         Debug\MyMD.obj
+         Debug\multitrackingwidget.obj
+         Debug\MultiTargetTracker.obj
+         Debug\MultiLocationProcessor.obj
+         Debug\MultiTrackingProcessor.obj
+         Debug\GetTargetPosition.obj
+         Debug\GetUAVPose.obj
+         Debug\MyUavVO.obj
+         Debug\VisionLocalization.obj
+         Debug\MonoLocationProcessor.obj
+         Debug\MotionDetectionProcessor.obj
+         Debug\TargetRecongnitionProcessor.obj
+         Debug\trackProcessor.obj
+         Debug\qshowlabel.obj
+         Debug\CompressiveTracker.obj
+         Debug\MyHash.obj
+         Debug\fhog.obj
+         Debug\kcftracker.obj
+         Debug\MyKCFTracker.obj
+         Debug\MyTracker.obj
+         Debug\condens.obj
+         Debug\filter.obj
+         Debug\hist.obj
+         Debug\lbp.obj
+         Debug\MyParticleFilter.obj
+         Debug\selector.obj
+         Debug\TimeOfDay.obj
+         Debug\mySTCTracker.obj
+         Debug\Config.obj
+         Debug\Features.obj
+         Debug\GraphUtils.obj
+         Debug\HaarFeature.obj
+         Debug\HaarFeatures.obj
+         Debug\HistogramFeatures.obj
+         Debug\ImageRep.obj
+         Debug\LaRank.obj
+         Debug\MultiFeatures.obj
+         Debug\myStruck.obj
+         Debug\RawFeatures.obj
+         Debug\Sampler.obj
+         Debug\Tracker.obj
+         Debug\TrajectoryManager.obj
+         Debug\QVideoProcessor.obj
+         Debug\VideoProcessor.obj
+         getopt.lib(getopt.obj) : 找到 MSIL .netmodule 或使用 /GL 编译的模块；正在使用 /LTCG 重新启动链接；将 /LTCG 添加到链接命令行以改进链接器性能
+     1>LINK : warning LNK4098: 默认库“MSVCRT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+         正在生成代码
+         已完成代码的生成
+         60209_MTT_V0.vcxproj -> E:\code\VS2010\60229_MTT_V0.8a\Win32\Debug\MTT_V0.8a.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\code\VS2010\60229_MTT_V0.8a\Win32\Debug\\MTT_V0.8a.exe;#1" /manifest Debug\MTT_V0.8a.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         正在删除文件“Debug\MTT_V0.8a.unsuccessfulbuild”。
+         正在对“Debug\MTT_V0.8a.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“E:\code\VS2010\60229_MTT_V0.8a\60209_MTT_V0.4a\60209_MTT_V0.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:11.17

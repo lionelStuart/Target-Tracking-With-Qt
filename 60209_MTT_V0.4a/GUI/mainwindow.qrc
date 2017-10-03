@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="MainWindow">
+    <file>Resource/front.png</file>
+  </qresource>
+  <qresource prefix="icon">
+    <file>Resource/icon.png</file>
+  </qresource>
+  <qresource prefix="bottom">
+    <file>Resource/bottom/B_1031x131.png</file>
+    <file>Resource/bottom/B+_1031x141.png</file>
+    <file>Resource/bottom/C_601x201.png</file>
+  </qresource>
+</RCC>
