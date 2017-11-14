@@ -7,7 +7,8 @@ Integrates target tarcking ,detection and locating method,
 
 contains KCF，PF ，STC，STRUCK，HASH and CT tracking methods,
 
-and methods on motion detection,detection-and-tracking method.
+and methods on motion detection,detection-and-tracking method,
+and also visual target location method .
 
 Compilable with Qt 5.2  ,opencv 2.4.8 or higher edition.
 
